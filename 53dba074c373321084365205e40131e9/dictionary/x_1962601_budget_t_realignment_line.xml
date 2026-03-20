@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="da5fa03cc373321084365205e40131b9" label="Realignment Line Item" max_length="40" name="x_1962601_budget_t_realignment_line" type="collection">
+        <element attributes="encode_utf8=false" label="To Cost Center" max_length="32" name="to_cost_center" reference="x_1962601_budget_t_cost_center" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Formatted Amount" max_length="50" name="formatted_amount" read_only="true" type="string"/>
+        <element attributes="encode_utf8=false" label="Cost Center" mandatory="true" max_length="32" name="cost_center" reference="x_1962601_budget_t_cost_center" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Notes" max_length="1000" name="notes" type="string"/>
+        <element attributes="encode_utf8=false" label="From Cost Center" max_length="32" name="from_cost_center" reference="x_1962601_budget_t_cost_center" type="reference"/>
+        <element default="0" label="Amount" mandatory="true" max_length="20" name="amount" type="decimal"/>
+        <element label="Credit Amount" max_length="20" name="credit_amount" read_only="true" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Line Number" max_length="40" name="number" type="string"/>
+        <element attributes="encode_utf8=false" display="true" label="Realignment" mandatory="true" max_length="32" name="realignment" reference="x_1962601_budget_t_realignment" type="reference"/>
+        <element attributes="encode_utf8=false" label="Budget Allocation" max_length="32" name="budget_allocation" reference="x_1962601_budget_t_budget_allocation" type="reference"/>
+        <element label="Debit Amount" max_length="20" name="debit_amount" read_only="true" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Budget Category" max_length="100" name="category" type="string"/>
+        <element choice="1" label="Line Type" mandatory="true" max_length="40" name="line_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Source (From)" sequence="0" value="source"/>
+                <element inactive_on_update="false" label="Destination (To)" sequence="1" value="destination"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="budget_allocation"/>
+        </index>
+        <index name="index2">
+            <element name="cost_center"/>
+        </index>
+        <index name="index3">
+            <element name="from_cost_center"/>
+        </index>
+        <index name="index4">
+            <element name="realignment"/>
+        </index>
+        <index name="index5">
+            <element name="to_cost_center"/>
+        </index>
+    </element>
+</database>

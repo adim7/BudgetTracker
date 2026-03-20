@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>submit_for_approval</action_name>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2/>
+        <comments/>
+        <condition>current.status == "draft"</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style>primary</form_style>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint>Submit this realignment for approval</hint>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Submit for Approval</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[
+        // Validate realignment before submission
+        var validation = true;
+        var errorMessages = [];
+        
+        // Check if there are line items
+        var lineCount = new GlideAggregate('x_1962601_budget_t_realignment_line');
+        lineCount.addQuery('realignment', current.sys_id);
+        lineCount.addAggregate('COUNT');
+        lineCount.query();
+        
+        if (lineCount.next() && lineCount.getAggregate('COUNT') == 0) {
+            validation = false;
+            errorMessages.push('Realignment must have at least one line item');
+        }
+        
+        // Check for justification
+        if (!current.justification || current.justification.toString().trim() === '') {
+            validation = false;
+            errorMessages.push('Justification is required for approval');
+        }
+        
+        // Check for total amount
+        if (!current.total_amount || parseFloat(current.total_amount) <= 0) {
+            validation = false;
+            errorMessages.push('Total amount must be greater than zero');
+        }
+        
+        if (validation) {
+            current.status = 'pending_approval';
+            current.update();
+            gs.addInfoMessage('Realignment submitted for approval successfully');
+            action.setRedirectURL(current);
+        } else {
+            gs.addErrorMessage('Cannot submit for approval: ' + errorMessages.join('; '));
+        }
+    ]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-20 14:18:57</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>88e8da57549c4e54b1aa3c6e86c4fb83</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Submit for Approval</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_ui_action_88e8da57549c4e54b1aa3c6e86c4fb83</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-20 14:18:57</sys_updated_on>
+        <table>x_1962601_budget_t_realignment</table>
+        <ui11_compatible>false</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>
