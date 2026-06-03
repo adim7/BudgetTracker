@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>false</inactive>
+        <order>1</order>
+        <published_ref/>
+        <question display_value="6. Urgency">7803bc4c2318484693b2c489295765f7</question>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-06-03 18:52:24</sys_created_on>
+        <sys_id>c747c898f8b24122bf3161600a2c6a01</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Urgent</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>question_choice_c747c898f8b24122bf3161600a2c6a01</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-03 18:52:24</sys_updated_on>
+        <text>Urgent</text>
+        <value>urgent</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=c747c898f8b24122bf3161600a2c6a01"/>
+</record_update>

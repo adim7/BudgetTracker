@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="funding_certified_date" label="Funding Certified Date" language="en" table="x_1962601_budget_t_pcard_transaction">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>funding_certified_date</element>
+            <help/>
+            <hint/>
+            <label>Funding Certified Date</label>
+            <language>en</language>
+            <name>x_1962601_budget_t_pcard_transaction</name>
+            <plural>Funding Certified Dates</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-03 18:52:05</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Funding Certified Date</sys_name>
+            <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+            <sys_update_name>sys_documentation_x_1962601_budget_t_pcard_transaction_funding_certified_date_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-03 18:52:05</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

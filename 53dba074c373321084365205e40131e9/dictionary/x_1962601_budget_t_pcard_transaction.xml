@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" audit="true" db_object_id="0b1d3ff8c3110bd084365205e40131e2" label="PCard Transaction" max_length="40" name="x_1962601_budget_t_pcard_transaction" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Supply Source" max_length="40" name="supply_source" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Optional Source" sequence="1" value="optional_source"/>
+                <element inactive_on_update="false" label="Govt-Wide Contract" sequence="5" value="govt_wide_contract"/>
+                <element inactive_on_update="false" label="Commercial Source" sequence="2" value="commercial_source"/>
+                <element inactive_on_update="false" label="Existing Contract" sequence="6" value="existing_contract"/>
+                <element inactive_on_update="false" label="GSA Schedule" sequence="3" value="gsa_schedule"/>
+                <element inactive_on_update="false" label="Open Market" sequence="7" value="open_market"/>
+                <element inactive_on_update="false" label="BPA" sequence="4" value="bpa"/>
+                <element inactive_on_update="false" label="Other" sequence="8" value="other"/>
+                <element inactive_on_update="false" label="Mandatory Source" sequence="0" value="mandatory_source"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Ship To City" max_length="100" name="ship_to_city" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Delivery Date Needed" max_length="40" name="delivery_date_needed" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Procurement Request Number" max_length="100" name="procurement_request_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Description of Purchase" max_length="4000" name="description_of_purchase" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Funding Certified Date" max_length="40" name="funding_certified_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="na" label="Property Status" max_length="40" name="property_status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Contains Accountable Property" sequence="2" value="accountable_property"/>
+                <element inactive_on_update="false" label="N/A" sequence="0" value="na"/>
+                <element inactive_on_update="false" label="Property Officer Notified" sequence="1" value="notified"/>
+            </choice>
+        </element>
+        <element attributes="encode_utf8=false" label="3rd Party Receipter" max_length="32" name="receipter" reference="sys_user" type="reference"/>
+        <element label="Officer Approved" max_length="40" name="officer_approved" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Date of Request" mandatory="true" max_length="40" name="date_of_request" type="glide_date"/>
+        <element label="Estimated Total" max_length="20" name="estimate_total" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Ship To Attention" max_length="200" name="ship_to_attention" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Ship To Address" max_length="255" name="ship_to_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Requester Phone" max_length="40" name="requester_phone" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Approval Date" max_length="40" name="approval_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="Funding Official" max_length="32" name="funding_official" reference="sys_user" type="reference"/>
+        <element label="Total Amount Paid" max_length="20" name="total_amount_paid" type="decimal"/>
+        <element label="Property Acknowledged" max_length="40" name="property_acknowledged" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Requester Name" max_length="200" name="requester_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Purchase Date" max_length="40" name="purchase_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="Cardholder" mandatory="true" max_length="32" name="cardholder" reference="x_1962601_budget_t_pcard_cardholder" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Special Approvals Needed" max_length="1000" name="special_approvals" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Ship To Zip" max_length="20" name="ship_to_zip" type="string"/>
+        <element attributes="encode_utf8=false" label="Vendor" max_length="32" name="vendor" reference="x_1962601_budget_t_pcard_vendor" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Property Acknowledged Date" max_length="40" name="property_acknowledged_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="Approving Officer" max_length="32" name="approving_officer" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="draft" label="State" max_length="40" name="state" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Closed" sequence="6" value="closed"/>
+                <element inactive_on_update="false" label="Pending Approval" sequence="2" value="pending_approval"/>
+                <element inactive_on_update="false" label="Approved" sequence="3" value="approved"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="draft"/>
+                <element inactive_on_update="false" label="Pending Receipt" sequence="4" value="pending_receipt"/>
+                <element inactive_on_update="false" label="Pending Funding Review" sequence="1" value="pending_funding"/>
+                <element inactive_on_update="false" label="Receipted" sequence="5" value="receipted"/>
+            </choice>
+        </element>
+        <element label="Receipt Validated" max_length="40" name="receipt_validated" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Delivery Location" max_length="255" name="delivery_location" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="routine" label="Urgency" max_length="40" name="urgency" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Urgent" sequence="1" value="urgent"/>
+                <element inactive_on_update="false" label="Emergency" sequence="2" value="emergency"/>
+                <element inactive_on_update="false" label="Routine" sequence="0" value="routine"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Justification" max_length="4000" name="justification" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Service Source" max_length="40" name="service_source" type="string">
+            <choice>
+                <element inactive_on_update="false" label="BPA" sequence="3" value="bpa"/>
+                <element inactive_on_update="false" label="Mandatory Source" sequence="0" value="mandatory_source"/>
+                <element inactive_on_update="false" label="Existing Contract" sequence="4" value="existing_contract"/>
+                <element inactive_on_update="false" label="Optional Source" sequence="1" value="optional_source"/>
+                <element inactive_on_update="false" label="Open Market" sequence="5" value="open_market"/>
+                <element inactive_on_update="false" label="GSA Schedule" sequence="2" value="gsa_schedule"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Ship To State" max_length="50" name="ship_to_state" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Receipt Date" max_length="40" name="receipt_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="Property Officer" max_length="32" name="property_officer" reference="sys_user" type="reference"/>
+        <element label="Funding Certified" max_length="40" name="funding_certified" type="boolean"/>
+        <index name="index">
+            <element name="approving_officer"/>
+        </index>
+        <index name="index2">
+            <element name="cardholder"/>
+        </index>
+        <index name="index3">
+            <element name="funding_official"/>
+        </index>
+        <index name="index4">
+            <element name="property_officer"/>
+        </index>
+        <index name="index5">
+            <element name="receipter"/>
+        </index>
+        <index name="index6">
+            <element name="vendor"/>
+        </index>
+    </element>
+</database>

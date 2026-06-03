@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="INSERT_OR_UPDATE">
+        <sc_cat_item display_value="Purchase Card Transaction Worksheet (CG-1501)">16639b6ca63b4fe3ad87494448b653fc</sc_cat_item>
+        <sc_category display_value="Can We Help You?">e15706fc0a0a0aa7007fc21e1ab70c2f</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-06-03 18:52:24</sys_created_on>
+        <sys_id>ab3cb67e962b47ba8cb7d29b971c4b24</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Can We Help You?.Purchase Card Transaction Worksheet (CG-1501)</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sc_cat_item_category_ab3cb67e962b47ba8cb7d29b971c4b24</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-03 18:52:24</sys_updated_on>
+    </sc_cat_item_category>
+</record_update>

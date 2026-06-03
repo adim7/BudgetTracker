@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="f21d3ff8c3110bd084365205e4013166" label="PCard Cardholder" max_length="40" name="x_1962601_budget_t_pcard_cardholder" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Component" max_length="100" name="component" type="string">
+            <choice>
+                <element inactive_on_update="false" label="ICE" sequence="2" value="ice"/>
+                <element inactive_on_update="false" label="CISA" sequence="6" value="cisa"/>
+                <element inactive_on_update="false" label="TSA" sequence="3" value="tsa"/>
+                <element inactive_on_update="false" label="Other" sequence="7" value="other"/>
+                <element inactive_on_update="false" label="USCG" sequence="0" value="uscg"/>
+                <element inactive_on_update="false" label="FEMA" sequence="4" value="fema"/>
+                <element inactive_on_update="false" label="CBP" sequence="1" value="cbp"/>
+                <element inactive_on_update="false" label="USSS" sequence="5" value="usss"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Phone" max_length="40" name="phone" type="string"/>
+        <element attributes="encode_utf8=false" display="true" label="Cardholder" mandatory="true" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Program Office" max_length="200" name="program_office" type="string"/>
+        <index name="index">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

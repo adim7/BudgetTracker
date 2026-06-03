@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_user_role_contains">
+    <sys_user_role_contains action="INSERT_OR_UPDATE">
+        <contains display_value="x_1962601_budget_t.pcard_approving_officer" name="x_1962601_budget_t.pcard_approving_officer">f9a73bdff251410e96459c189c59d3fb</contains>
+        <role display_value="x_1962601_budget_t.pcard_admin" name="x_1962601_budget_t.pcard_admin">1aac96c9226d466b9516300163ce5e04</role>
+        <sys_class_name>sys_user_role_contains</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-06-03 18:52:28</sys_created_on>
+        <sys_id>021ee835bc2c41fbb270b33fe8bb209f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_user_role_contains_021ee835bc2c41fbb270b33fe8bb209f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-03 18:52:28</sys_updated_on>
+    </sys_user_role_contains>
+</record_update>
