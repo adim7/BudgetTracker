@@ -17,6 +17,7 @@
         <menu/>
         <name>Budget Track</name>
         <package_json display_value="x_1962601_budget_t/x-1962601-budget-track/1.0.0/package.json" path="x_1962601_budget_t/x-1962601-budget-track/1.0.0/package.json">x_1962601_budget_t/x-1962601-budget-track/1.0.0/package.json</package_json>
+        <package_resolver_version>1.0.0</package_resolver_version>
         <private>false</private>
         <restrict_table_access>false</restrict_table_access>
         <runtime_access_tracking>permissive</runtime_access_tracking>

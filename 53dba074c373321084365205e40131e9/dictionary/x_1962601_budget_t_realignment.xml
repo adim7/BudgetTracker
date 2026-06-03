@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element audit="true" db_object_id="c65f603cc373321084365205e40131a7" label="Budget Realignment" max_length="40" name="x_1962601_budget_t_realignment" type="collection">
         <element attributes="encode_utf8=false" label="Budget" mandatory="true" max_length="32" name="budget" reference="x_1962601_budget_t_budget" type="reference"/>
-        <element attributes="edge_encryption_enabled=true" display="true" label="Realignment Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Realignment Number" max_length="40" name="number" read_only="true" read_only_option="instance_configured" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Justification" mandatory="true" max_length="2000" name="justification" type="string"/>
         <element choice="1" default="medium" label="Priority" max_length="40" name="priority" type="choice">
             <choice>

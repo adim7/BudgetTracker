@@ -5,15 +5,15 @@
         <assessment/>
         <device_type/>
         <filter/>
-        <hint>Create a new fund realignment request</hint>
+        <hint/>
         <homepage/>
         <image/>
-        <link_type>NEW</link_type>
+        <link_type>SEPARATOR</link_type>
         <map_page/>
         <mobile_title/>
         <mobile_view_name/>
-        <name>x_1962601_budget_t_realignment</name>
-        <order>640</order>
+        <name/>
+        <order>1000</order>
         <override_menu_roles>false</override_menu_roles>
         <query/>
         <report/>
@@ -23,21 +23,21 @@
         <screen/>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-04-27 20:31:58</sys_created_on>
+        <sys_created_on>2026-04-28 21:39:23</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>d26aabdcb0484509bfa486c6de2c223e</sys_id>
+        <sys_id>bb927345b24e4586b15b66defc0da36e</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>New Realignment Request</sys_name>
+        <sys_name>Resources</sys_name>
         <sys_overrides/>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
         <sys_policy/>
         <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
-        <sys_update_name>sys_app_module_d26aabdcb0484509bfa486c6de2c223e</sys_update_name>
+        <sys_update_name>sys_app_module_bb927345b24e4586b15b66defc0da36e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-04-27 20:31:58</sys_updated_on>
+        <sys_updated_on>2026-04-28 21:39:23</sys_updated_on>
         <timeline_page/>
-        <title>New Realignment Request</title>
+        <title>Resources</title>
         <uncancelable>false</uncancelable>
         <ux_list/>
         <view_name/>

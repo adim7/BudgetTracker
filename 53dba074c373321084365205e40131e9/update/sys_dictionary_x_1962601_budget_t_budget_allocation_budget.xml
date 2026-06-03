@@ -34,6 +34,7 @@
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference display_value="" name="x_1962601_budget_t_budget">x_1962601_budget_t_budget</reference>
         <reference_cascade_rule/>
