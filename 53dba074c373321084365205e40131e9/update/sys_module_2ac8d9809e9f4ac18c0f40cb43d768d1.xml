@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs } from '@servicenow/glide'
+
+export function formatRealignmentLine(current, previous) {
+    // Auto-populate from/to cost center fields based on line type
+    if (current.getValue('line_type') == 'source') {
+        // Source line: cost center is the FROM center
+        current.setValue('from_cost_center', current.getValue('cost_center'));
+        current.setValue('to_cost_center', '');
+        
+        // Set debit amount (positive)
+        const amount = parseFloat(current.getValue('amount') || 0);
+        current.setValue('debit_amount', amount);
+        current.setValue('credit_amount', 0);
+        
+        // Format as positive debit: $1,200
+        current.setValue('formatted_amount', '$' + amount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }));
+        
+    } else if (current.getValue('line_type') == 'destination') {
+        // Destination line: cost center is the TO center
+        current.setValue('to_cost_center', current.getValue('cost_center'));
+        current.setValue('from_cost_center', '');
+        
+        // Set credit amount (positive)
+        const amount = parseFloat(current.getValue('amount') || 0);
+        current.setValue('credit_amount', amount);
+        current.setValue('debit_amount', 0);
+        
+        // Format as credit with parentheses: ($1,200.00)
+        current.setValue('formatted_amount', '($' + amount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }) + ')');
+    }
+    
+    // Validation: Ensure amount is positive
+    const amount = parseFloat(current.getValue('amount') || 0);
+    if (amount <= 0) {
+        gs.addErrorMessage('Amount must be greater than zero');
+        current.setAbortAction(true);
+    }
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/realignment-line-formatting.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-20 16:36:10</sys_created_on>
+        <sys_id>2ac8d9809e9f4ac18c0f40cb43d768d1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/realignment-line-formatting.js</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_module_2ac8d9809e9f4ac18c0f40cb43d768d1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-20 16:36:10</sys_updated_on>
+    </sys_module>
+</record_update>

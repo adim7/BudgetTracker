@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs, GlideRecord, GlideAggregate } from '@servicenow/glide'
+
+/**
+ * Calculates and updates budget totals (allocated, spent, available)
+ * @param {GlideRecord} budgetRecord - The budget record to update
+ */
+export function calculateBudgetTotals(budgetRecord) {
+    const budgetId = budgetRecord.getUniqueValue();
+    
+    // Calculate total allocated from budget allocations
+    const allocatedAgg = new GlideAggregate('x_1962601_budget_t_budget_allocation');
+    allocatedAgg.addQuery('budget', budgetId);
+    allocatedAgg.addAggregate('SUM', 'allocated_amount');
+    allocatedAgg.query();
+    
+    const totalAllocated = allocatedAgg.next() ? parseFloat(allocatedAgg.getAggregate('SUM', 'allocated_amount') || 0) : 0;
+    
+    // Calculate total spent from budget allocations
+    const spentAgg = new GlideAggregate('x_1962601_budget_t_budget_allocation');
+    spentAgg.addQuery('budget', budgetId);
+    spentAgg.addAggregate('SUM', 'spent_amount');
+    spentAgg.query();
+    
+    const totalSpent = spentAgg.next() ? parseFloat(spentAgg.getAggregate('SUM', 'spent_amount') || 0) : 0;
+    
+    // Calculate available amount
+    const totalAvailable = totalAllocated - totalSpent;
+    
+    // Update the budget record
+    budgetRecord.setValue('total_allocated', totalAllocated.toString());
+    budgetRecord.setValue('total_spent', totalSpent.toString());
+    budgetRecord.setValue('total_available', totalAvailable.toString());
+    budgetRecord.update();
+    
+    gs.info(`Budget totals updated for ${budgetRecord.getDisplayValue()}: Allocated=${totalAllocated}, Spent=${totalSpent}, Available=${totalAvailable}`);
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/budget-calculations.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-20 14:18:57</sys_created_on>
+        <sys_id>e1e4b2bff1cb437e94bc85c1cf03691c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/budget-calculations.js</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_module_e1e4b2bff1cb437e94bc85c1cf03691c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-20 14:18:57</sys_updated_on>
+    </sys_module>
+</record_update>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="925fa03cc373321084365205e4013174" label="Budget Allocation" max_length="40" name="x_1962601_budget_t_budget_allocation" type="collection">
+        <element default="0" label="Spent Amount" max_length="20" name="spent_amount" read_only="true" read_only_option="instance_configured" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Notes" max_length="1000" name="notes" type="string"/>
+        <element attributes="encode_utf8=false" display="true" label="Budget" mandatory="true" max_length="32" name="budget" reference="x_1962601_budget_t_budget" type="reference"/>
+        <element default="0" label="Available Amount" max_length="20" name="available_amount" read_only="true" read_only_option="instance_configured" type="decimal"/>
+        <element attributes="encode_utf8=false" label="Cost Center" mandatory="true" max_length="32" name="cost_center" reference="x_1962601_budget_t_cost_center" type="reference"/>
+        <element choice="1" default="initial" label="Allocation Type" max_length="40" name="allocation_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Realignment" sequence="1" value="realignment"/>
+                <element inactive_on_update="false" label="Adjustment" sequence="2" value="adjustment"/>
+                <element inactive_on_update="false" label="Initial Allocation" sequence="0" value="initial"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Allocation Number" max_length="40" name="number" type="string"/>
+        <element default="0" label="Allocated Amount" mandatory="true" max_length="20" name="allocated_amount" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Budget Category" max_length="100" name="category" type="string"/>
+        <index name="index">
+            <element name="budget"/>
+        </index>
+        <index name="index2">
+            <element name="cost_center"/>
+        </index>
+    </element>
+</database>

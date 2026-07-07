@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="465fa03cc373321084365205e4013114" label="Budget" max_length="40" name="x_1962601_budget_t_budget" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="End Date" mandatory="true" max_length="40" name="end_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="Budget Owner" mandatory="true" max_length="32" name="budget_owner" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Fiscal Year" mandatory="true" max_length="4" name="fiscal_year" type="string"/>
+        <element choice="1" label="Budget Type" mandatory="true" max_length="40" name="budget_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Project" sequence="2" value="project"/>
+                <element inactive_on_update="false" label="Operational" sequence="0" value="operational"/>
+                <element inactive_on_update="false" label="Capital" sequence="1" value="capital"/>
+            </choice>
+        </element>
+        <element default="0" label="Total Allocated Amount" max_length="20" name="total_allocated" read_only="true" read_only_option="instance_configured" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Description" max_length="1000" name="description" type="string"/>
+        <element choice="1" default="draft" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="draft"/>
+                <element inactive_on_update="false" label="Approved" sequence="1" value="approved"/>
+                <element inactive_on_update="false" label="Active" sequence="2" value="active"/>
+                <element inactive_on_update="false" label="Closed" sequence="3" value="closed"/>
+            </choice>
+        </element>
+        <element default="0" label="Total Spent" max_length="20" name="total_spent" read_only="true" read_only_option="instance_configured" type="decimal"/>
+        <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Budget Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Budget Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Start Date" mandatory="true" max_length="40" name="start_date" type="glide_date"/>
+        <element default="0" label="Total Available" max_length="20" name="total_available" read_only="true" read_only_option="instance_configured" type="decimal"/>
+        <index name="index">
+            <element name="budget_owner"/>
+        </index>
+    </element>
+</database>

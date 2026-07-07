@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs, GlideRecord, GlideDateTime } from '@servicenow/glide'
+
+/**
+ * Approval workflow management for budget realignments
+ */
+
+/**
+ * Handles realignment status changes and workflow triggers
+ * @param {GlideRecord} current - Current realignment record
+ * @param {GlideRecord} previous - Previous values
+ */
+export function handleRealignmentWorkflow(current, previous) {
+    const currentStatus = current.getValue('status');
+    const previousStatus = previous ? previous.getValue('status') : '';
+    
+    if (currentStatus !== previousStatus) {
+        switch (currentStatus) {
+            case 'pending_approval':
+                triggerApprovalProcess(current);
+                break;
+            case 'approved':
+                handleApproval(current);
+                break;
+            case 'executed':
+                handleExecution(current);
+                break;
+            case 'cancelled':
+                handleCancellation(current);
+                break;
+        }
+    }
+}
+
+/**
+ * Triggers the approval process for a realignment
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ */
+export function triggerApprovalProcess(realignmentRecord) {
+    const totalAmount = parseFloat(realignmentRecord.getValue('total_amount') || 0);
+    const budgetOwner = realignmentRecord.budget.budget_owner.toString();
+    
+    // For high-value realignments (>$50,000), require additional approval
+    if (totalAmount > 50000) {
+        realignmentRecord.setValue('priority', 'high');
+        gs.addInfoMessage(`High-value realignment (${totalAmount}) flagged for senior approval`);
+        
+        // In a real implementation, this would trigger a ServiceNow approval workflow
+        // For now, we'll simulate by requiring budget owner approval
+        notifyBudgetOwner(realignmentRecord, budgetOwner);
+    } else {
+        // Auto-approve smaller amounts if requested by budget owner
+        const requestedBy = realignmentRecord.getValue('requested_by');
+        if (requestedBy === budgetOwner) {
+            realignmentRecord.setValue('status', 'approved');
+            realignmentRecord.setValue('approved_by', budgetOwner);
+            realignmentRecord.setValue('approval_date', new GlideDateTime().getDisplayValue());
+            gs.addInfoMessage('Realignment auto-approved by budget owner');
+        } else {
+            notifyBudgetOwner(realignmentRecord, budgetOwner);
+        }
+    }
+}
+
+/**
+ * Handles approved realignments
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ */
+export function handleApproval(realignmentRecord) {
+    // Validate the realignment can still be executed
+    if (validateRealignmentForExecution(realignmentRecord)) {
+        gs.addInfoMessage(`Realignment ${realignmentRecord.getDisplayValue()} approved and ready for execution`);
+        
+        // Notify the requester
+        const requestedBy = realignmentRecord.getValue('requested_by');
+        if (requestedBy) {
+            gs.eventQueue('budget.realignment.approved', realignmentRecord, requestedBy);
+        }
+    } else {
+        realignmentRecord.setValue('status', 'cancelled');
+        gs.addErrorMessage('Realignment cancelled due to insufficient funds or validation failures');
+    }
+}
+
+/**
+ * Handles realignment execution
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ */
+export function handleExecution(realignmentRecord) {
+    // Log the execution
+    gs.info(`Realignment ${realignmentRecord.getDisplayValue()} executed successfully`);
+    
+    // Update execution timestamp
+    const currentTime = new GlideDateTime().getDisplayValue();
+    realignmentRecord.setValue('execution_date', currentTime);
+    
+    // Notify stakeholders
+    notifyStakeholders(realignmentRecord);
+}
+
+/**
+ * Handles realignment cancellation
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ */
+export function handleCancellation(realignmentRecord) {
+    gs.addInfoMessage(`Realignment ${realignmentRecord.getDisplayValue()} has been cancelled`);
+    
+    // Notify the requester
+    const requestedBy = realignmentRecord.getValue('requested_by');
+    if (requestedBy) {
+        gs.eventQueue('budget.realignment.cancelled', realignmentRecord, requestedBy);
+    }
+}
+
+/**
+ * Validates realignment for execution
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ * @returns {boolean} - True if valid for execution
+ */
+export function validateRealignmentForExecution(realignmentRecord) {
+    const realignmentId = realignmentRecord.getUniqueValue();
+    const budgetId = realignmentRecord.getValue('budget');
+    
+    // Check source lines have sufficient funds
+    const sourceLines = new GlideRecord('x_1962601_budget_t_realignment_line');
+    sourceLines.addQuery('realignment', realignmentId);
+    sourceLines.addQuery('line_type', 'source');
+    sourceLines.query();
+    
+    while (sourceLines.next()) {
+        const costCenterId = sourceLines.getValue('cost_center');
+        const amount = parseFloat(sourceLines.getValue('amount') || 0);
+        
+        const allocation = new GlideRecord('x_1962601_budget_t_budget_allocation');
+        allocation.addQuery('budget', budgetId);
+        allocation.addQuery('cost_center', costCenterId);
+        allocation.query();
+        
+        if (allocation.next()) {
+            const availableAmount = parseFloat(allocation.getValue('available_amount') || 0);
+            if (amount > availableAmount) {
+                gs.addErrorMessage(`Insufficient funds in ${allocation.cost_center.getDisplayValue()}: Required ${amount}, Available ${availableAmount}`);
+                return false;
+            }
+        } else {
+            gs.addErrorMessage(`No allocation found for cost center in realignment line`);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+/**
+ * Notifies budget owner of pending approval
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ * @param {string} budgetOwner - The budget owner sys_id
+ */
+function notifyBudgetOwner(realignmentRecord, budgetOwner) {
+    // In a real implementation, this would send an email or create a task
+    gs.info(`Approval notification sent to budget owner for realignment ${realignmentRecord.getDisplayValue()}`);
+    gs.eventQueue('budget.realignment.pending_approval', realignmentRecord, budgetOwner);
+}
+
+/**
+ * Notifies stakeholders of realignment execution
+ * @param {GlideRecord} realignmentRecord - The realignment record
+ */
+function notifyStakeholders(realignmentRecord) {
+    const realignmentId = realignmentRecord.getUniqueValue();
+    
+    // Notify affected cost center managers
+    const lines = new GlideRecord('x_1962601_budget_t_realignment_line');
+    lines.addQuery('realignment', realignmentId);
+    lines.query();
+    
+    const notifiedManagers = new Set();
+    
+    while (lines.next()) {
+        const costCenter = lines.cost_center.getRefRecord();
+        if (costCenter && costCenter.isValidRecord()) {
+            const manager = costCenter.getValue('manager');
+            if (manager && !notifiedManagers.has(manager)) {
+                notifiedManagers.add(manager);
+                gs.eventQueue('budget.realignment.executed', realignmentRecord, manager);
+            }
+        }
+    }
+    
+    gs.info(`Execution notifications sent to ${notifiedManagers.size} cost center managers`);
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/approval-workflow.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-20 14:18:57</sys_created_on>
+        <sys_id>4501442ebb444df49d4cf047f296c707</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/approval-workflow.js</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_module_4501442ebb444df49d4cf047f296c707</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-20 14:18:57</sys_updated_on>
+    </sys_module>
+</record_update>

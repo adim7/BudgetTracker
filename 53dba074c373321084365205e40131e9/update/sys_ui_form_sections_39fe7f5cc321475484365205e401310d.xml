@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="39fe7f5cc321475484365205e401310d" sys_domain="global" table="x_1962601_budget_t_pcard_transaction" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-14 15:58:55</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>79fe7f5cc321475484365205e4013113</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1962601_budget_t_pcard_transaction" name="x_1962601_budget_t_pcard_transaction" sys_domain="global" view="Default view">39fe7f5cc321475484365205e401310d</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_1962601_budget_t_pcard_transaction" sys_domain="global" view="Default view">1cffc045c3d10bd084365205e4013131</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-14 15:58:55</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-14 15:58:55</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f1fe7f5cc321475484365205e4013115</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1962601_budget_t_pcard_transaction" name="x_1962601_budget_t_pcard_transaction" sys_domain="global" view="Default view">39fe7f5cc321475484365205e401310d</sys_ui_form>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_1962601_budget_t_pcard_transaction" sys_domain="global" view="Default view">31fe7f5cc321475484365205e401310b</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-14 16:02:04</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_1962601_budget_t_pcard_transaction</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-14 15:58:55</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>39fe7f5cc321475484365205e401310d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1962601_budget_t_pcard_transaction</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+            <sys_update_name>sys_ui_form_sections_39fe7f5cc321475484365205e401310d</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-14 15:58:55</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

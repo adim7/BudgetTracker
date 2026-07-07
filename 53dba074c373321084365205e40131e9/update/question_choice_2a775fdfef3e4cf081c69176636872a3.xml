@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>false</inactive>
+        <order>0</order>
+        <published_ref/>
+        <question display_value="21b. Service Source">9413a2053107417298bfc20225be4b87</question>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-06-03 18:52:23</sys_created_on>
+        <sys_id>2a775fdfef3e4cf081c69176636872a3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Mandatory Source</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>question_choice_2a775fdfef3e4cf081c69176636872a3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-03 18:52:23</sys_updated_on>
+        <text>Mandatory Source</text>
+        <value>mandatory_source</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=2a775fdfef3e4cf081c69176636872a3"/>
+</record_update>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs, GlideRecord } from '@servicenow/glide'
+
+/**
+ * Calculates and updates allocation amounts (spent, available)
+ * @param {GlideRecord} allocationRecord - The allocation record to update
+ */
+export function calculateAllocationTotals(allocationRecord) {
+    const allocationId = allocationRecord.getUniqueValue();
+    const allocatedAmount = parseFloat(allocationRecord.getValue('allocated_amount') || 0);
+    
+    // For now, spent amount would be calculated from actual expenditure records
+    // This is a placeholder that could be enhanced to link to expense tracking
+    let spentAmount = parseFloat(allocationRecord.getValue('spent_amount') || 0);
+    
+    // Calculate available amount
+    const availableAmount = allocatedAmount - spentAmount;
+    
+    // Update the allocation record
+    allocationRecord.setValue('available_amount', availableAmount.toString());
+    
+    gs.info(`Allocation amounts calculated: Allocated=${allocatedAmount}, Spent=${spentAmount}, Available=${availableAmount}`);
+}
+
+/**
+ * Validates realignment to ensure sufficient funds are available
+ * @param {GlideRecord} realignmentRecord - The realignment record to validate
+ * @returns {boolean} - True if validation passes, false otherwise
+ */
+export function validateRealignment(realignmentRecord) {
+    const realignmentId = realignmentRecord.getUniqueValue();
+    
+    // Get source lines (amounts being moved from cost centers)
+    const sourceLines = new GlideRecord('x_1962601_budget_t_realignment_line');
+    sourceLines.addQuery('realignment', realignmentId);
+    sourceLines.addQuery('line_type', 'source');
+    sourceLines.query();
+    
+    let totalSourceAmount = 0;
+    const validationErrors = [];
+    
+    while (sourceLines.next()) {
+        const sourceAmount = parseFloat(sourceLines.getValue('amount') || 0);
+        totalSourceAmount += sourceAmount;
+        
+        // Check if the source cost center has sufficient available funds
+        const costCenterId = sourceLines.getValue('cost_center');
+        const budgetId = realignmentRecord.getValue('budget');
+        
+        const allocation = new GlideRecord('x_1962601_budget_t_budget_allocation');
+        allocation.addQuery('budget', budgetId);
+        allocation.addQuery('cost_center', costCenterId);
+        allocation.query();
+        
+        if (allocation.next()) {
+            const availableAmount = parseFloat(allocation.getValue('available_amount') || 0);
+            if (sourceAmount > availableAmount) {
+                validationErrors.push(`Insufficient funds in cost center ${allocation.cost_center.getDisplayValue()}. Requested: ${sourceAmount}, Available: ${availableAmount}`);
+            }
+        } else {
+            validationErrors.push(`No budget allocation found for cost center ${sourceLines.cost_center.getDisplayValue()}`);
+        }
+    }
+    
+    // Get destination lines total
+    const destLines = new GlideRecord('x_1962601_budget_t_realignment_line');
+    destLines.addQuery('realignment', realignmentId);
+    destLines.addQuery('line_type', 'destination');
+    destLines.query();
+    
+    let totalDestAmount = 0;
+    while (destLines.next()) {
+        totalDestAmount += parseFloat(destLines.getValue('amount') || 0);
+    }
+    
+    // Validate that source and destination amounts match
+    if (Math.abs(totalSourceAmount - totalDestAmount) > 0.01) {
+        validationErrors.push(`Source amount (${totalSourceAmount}) must equal destination amount (${totalDestAmount})`);
+    }
+    
+    // Update total amount on realignment record
+    realignmentRecord.setValue('total_amount', totalSourceAmount.toString());
+    
+    if (validationErrors.length > 0) {
+        gs.addErrorMessage(`Realignment validation failed: ${validationErrors.join('; ')}`);
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Executes a realignment by updating budget allocations
+ * @param {GlideRecord} realignmentRecord - The realignment record to execute
+ */
+export function executeRealignment(realignmentRecord) {
+    const realignmentId = realignmentRecord.getUniqueValue();
+    const budgetId = realignmentRecord.getValue('budget');
+    
+    try {
+        // Process source lines (reduce allocations)
+        const sourceLines = new GlideRecord('x_1962601_budget_t_realignment_line');
+        sourceLines.addQuery('realignment', realignmentId);
+        sourceLines.addQuery('line_type', 'source');
+        sourceLines.query();
+        
+        while (sourceLines.next()) {
+            const costCenterId = sourceLines.getValue('cost_center');
+            const amount = parseFloat(sourceLines.getValue('amount') || 0);
+            
+            const allocation = new GlideRecord('x_1962601_budget_t_budget_allocation');
+            allocation.addQuery('budget', budgetId);
+            allocation.addQuery('cost_center', costCenterId);
+            allocation.query();
+            
+            if (allocation.next()) {
+                const currentAmount = parseFloat(allocation.getValue('allocated_amount') || 0);
+                allocation.setValue('allocated_amount', (currentAmount - amount).toString());
+                allocation.update();
+            }
+        }
+        
+        // Process destination lines (increase allocations)
+        const destLines = new GlideRecord('x_1962601_budget_t_realignment_line');
+        destLines.addQuery('realignment', realignmentId);
+        destLines.addQuery('line_type', 'destination');
+        destLines.query();
+        
+        while (destLines.next()) {
+            const costCenterId = destLines.getValue('cost_center');
+            const amount = parseFloat(destLines.getValue('amount') || 0);
+            
+            const allocation = new GlideRecord('x_1962601_budget_t_budget_allocation');
+            allocation.addQuery('budget', budgetId);
+            allocation.addQuery('cost_center', costCenterId);
+            allocation.query();
+            
+            if (allocation.next()) {
+                const currentAmount = parseFloat(allocation.getValue('allocated_amount') || 0);
+                allocation.setValue('allocated_amount', (currentAmount + amount).toString());
+                allocation.update();
+            } else {
+                // Create new allocation if doesn't exist
+                const newAllocation = new GlideRecord('x_1962601_budget_t_budget_allocation');
+                newAllocation.setValue('budget', budgetId);
+                newAllocation.setValue('cost_center', costCenterId);
+                newAllocation.setValue('allocated_amount', amount.toString());
+                newAllocation.setValue('allocation_type', 'realignment');
+                newAllocation.insert();
+            }
+        }
+        
+        // Update realignment status
+        realignmentRecord.setValue('status', 'executed');
+        realignmentRecord.setValue('execution_date', new Date().toISOString());
+        
+        gs.addInfoMessage(`Realignment ${realignmentRecord.getDisplayValue()} executed successfully`);
+        
+    } catch (error) {
+        gs.addErrorMessage(`Error executing realignment: ${error.message}`);
+        throw error;
+    }
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/realignment-calculations.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-20 14:18:57</sys_created_on>
+        <sys_id>c8f5973716d24aa784309c07b697da5c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1962601_budget_t/x-1962601-budget-track/1.0.0/src/server/realignment-calculations.js</sys_name>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_module_c8f5973716d24aa784309c07b697da5c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-20 14:18:57</sys_updated_on>
+    </sys_module>
+</record_update>
