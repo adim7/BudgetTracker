@@ -36,17 +36,24 @@
         numRec.addQuery('category', 'x_1962601_budget_t_budget');
         numRec.query();
         if (numRec.next()) {
-            var nextNum = parseInt(numRec.getValue('number'), 10) + 1;
-            numRec.setValue('number', String(nextNum));
-            numRec.update();
-
+            // Read all values BEFORE any modifications
             var prefix = numRec.getValue('prefix');
             var maxDigits = parseInt(numRec.getValue('maximum_digits'), 10);
+            var currentNum = parseInt(numRec.getValue('number'), 10);
+            var nextNum = currentNum + 1;
+
+            // Format the number with zero-padding
             var paddedNum = String(nextNum);
             while (paddedNum.length < maxDigits) {
                 paddedNum = '0' + paddedNum;
             }
+
+            // Set the number on the current record
             current.setValue('number', prefix + paddedNum);
+
+            // Update the counter in sys_number
+            numRec.setValue('number', String(nextNum));
+            numRec.update();
         }
     }
 })(current, previous);
