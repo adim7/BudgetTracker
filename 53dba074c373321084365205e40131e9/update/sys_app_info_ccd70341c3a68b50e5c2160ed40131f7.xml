@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_app_info">
+    <sys_app_info action="INSERT_OR_UPDATE">
+        <properties>{"generated_using_ai":"true"}</properties>
+        <sys_class_name>sys_app_info</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-08-05 12:56:11</sys_created_on>
+        <sys_id>ccd70341c3a68b50e5c2160ed40131f7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
+        <sys_update_name>sys_app_info_ccd70341c3a68b50e5c2160ed40131f7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-08-05 12:56:11</sys_updated_on>
+    </sys_app_info>
+</record_update>
