@@ -12,7 +12,7 @@
     <choice_field/>
     <choice_table/>
     <column_label>Budget Number</column_label>
-    <default_value>javascript:getNextObjNumberPadded();</default_value>
+    <default_value>javascript:global.getNextObjNumberPadded();</default_value>
     <dependent/>
     <dependent_on_field/>
     <display>false</display>
