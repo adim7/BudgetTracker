@@ -17,7 +17,7 @@
     <collection>x_1962601_budget_t_budget</collection>
     <condition/>
     <description>Auto-generates a unique budget number (BUD prefix) when a new budget record is created</description>
-    <execute_function>false</execute_function>
+    <execute_function>true</execute_function>
     <filter_condition/>
     <is_rest>false</is_rest>
     <message/>
@@ -30,35 +30,33 @@
     <rest_service_text/>
     <rest_variables/>
     <role_conditions/>
-    <script><![CDATA[(function executeRule(current, previous) {
-    if (!current.getValue('number')) {
-        var prefix = 'BUD';
-        var maxDigits = 7;
-        var nextNum = 1001;
+    <script><![CDATA[function onBefore(current, previous) {
+    var prefix = 'BUD';
+    var maxDigits = 7;
+    var nextNum = 1001;
 
-        var gr = new GlideRecord('x_1962601_budget_t_budget');
-        gr.addNotNullQuery('number');
-        gr.addQuery('number', '!=', '');
-        gr.orderByDesc('number');
-        gr.setLimit(1);
-        gr.query();
-        if (gr.next()) {
-            var lastNumber = gr.getValue('number');
-            if (lastNumber && lastNumber.indexOf(prefix) === 0) {
-                var numericPart = parseInt(lastNumber.substring(prefix.length), 10);
-                if (!isNaN(numericPart)) {
-                    nextNum = numericPart + 1;
-                }
+    var gr = new GlideRecord('x_1962601_budget_t_budget');
+    gr.addNotNullQuery('number');
+    gr.addQuery('number', '!=', '');
+    gr.orderByDesc('number');
+    gr.setLimit(1);
+    gr.query();
+    if (gr.next()) {
+        var lastNumber = gr.getValue('number');
+        if (lastNumber && lastNumber.indexOf(prefix) === 0) {
+            var numericPart = parseInt(lastNumber.substring(prefix.length), 10);
+            if (!isNaN(numericPart)) {
+                nextNum = numericPart + 1;
             }
         }
-
-        var paddedNum = String(nextNum);
-        while (paddedNum.length < maxDigits) {
-            paddedNum = '0' + paddedNum;
-        }
-        current.setValue('number', prefix + paddedNum);
     }
-})(current, previous);
+
+    var paddedNum = String(nextNum);
+    while (paddedNum.length < maxDigits) {
+        paddedNum = '0' + paddedNum;
+    }
+    current.number = prefix + paddedNum;
+}
 ]]></script>
     <sys_name>Generate Budget Number</sys_name>
     <sys_policy/>
