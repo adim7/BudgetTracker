@@ -32,29 +32,31 @@
     <role_conditions/>
     <script><![CDATA[(function executeRule(current, previous) {
     if (!current.getValue('number')) {
-        var numRec = new GlideRecord('sys_number');
-        numRec.addQuery('category', 'x_1962601_budget_t_budget');
-        numRec.query();
-        if (numRec.next()) {
-            // Read all values BEFORE any modifications
-            var prefix = numRec.getValue('prefix');
-            var maxDigits = parseInt(numRec.getValue('maximum_digits'), 10);
-            var currentNum = parseInt(numRec.getValue('number'), 10);
-            var nextNum = currentNum + 1;
+        var prefix = 'BUD';
+        var maxDigits = 7;
+        var nextNum = 1001;
 
-            // Format the number with zero-padding
-            var paddedNum = String(nextNum);
-            while (paddedNum.length < maxDigits) {
-                paddedNum = '0' + paddedNum;
+        var gr = new GlideRecord('x_1962601_budget_t_budget');
+        gr.addNotNullQuery('number');
+        gr.addQuery('number', '!=', '');
+        gr.orderByDesc('number');
+        gr.setLimit(1);
+        gr.query();
+        if (gr.next()) {
+            var lastNumber = gr.getValue('number');
+            if (lastNumber && lastNumber.indexOf(prefix) === 0) {
+                var numericPart = parseInt(lastNumber.substring(prefix.length), 10);
+                if (!isNaN(numericPart)) {
+                    nextNum = numericPart + 1;
+                }
             }
-
-            // Set the number on the current record
-            current.setValue('number', prefix + paddedNum);
-
-            // Update the counter in sys_number
-            numRec.setValue('number', String(nextNum));
-            numRec.update();
         }
+
+        var paddedNum = String(nextNum);
+        while (paddedNum.length < maxDigits) {
+            paddedNum = '0' + paddedNum;
+        }
+        current.setValue('number', prefix + paddedNum);
     }
 })(current, previous);
 ]]></script>

@@ -15,7 +15,7 @@
     <label>Budget</label>
     <live_feed_enabled>false</live_feed_enabled>
     <name>x_1962601_budget_t_budget</name>
-    <number_ref category="x_1962601_budget_t_budget" prefix="BUD">d2f27be2af614228b36a89130b4ac945</number_ref>
+    <number_ref/>
     <read_access>true</read_access>
     <scriptable_table>false</scriptable_table>
     <super_class/>

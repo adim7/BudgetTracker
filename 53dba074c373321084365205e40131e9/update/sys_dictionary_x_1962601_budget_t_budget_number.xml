@@ -29,8 +29,8 @@
     <max_length>40</max_length>
     <name>x_1962601_budget_t_budget</name>
     <primary>false</primary>
-    <read_only>true</read_only>
-    <read_only_option>instance_configured</read_only_option>
+    <read_only>false</read_only>
+    <read_only_option/>
     <reference/>
     <reference_cascade_rule/>
     <reference_floats/>
