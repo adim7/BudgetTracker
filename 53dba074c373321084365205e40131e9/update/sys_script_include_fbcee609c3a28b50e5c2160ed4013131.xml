@@ -5,7 +5,8 @@
         <api_name>x_1962601_budget_t.BudgetSpreadsheetTotal</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
-        <description/>
+        <description>x_1962601_budget_t_budget&#13;
+total_allocated</description>
         <mobile_callable>false</mobile_callable>
         <name>BudgetSpreadsheetTotal</name>
         <sandbox_callable>false</sandbox_callable>
@@ -24,13 +25,15 @@ BudgetSpreadsheetTotal.prototype = {
         this.SHEET_INDEX = 0;
         // ZERO-BASED header row index: 0 means headers are in spreadsheet row 1
         this.HEADER_ROW_INDEX = 0;
+        // When no spreadsheet is attached at all, write 0.00 instead of leaving the old value
+        this.RESET_TO_ZERO_WHEN_EMPTY = true;
     },
 
     /**
      * Main entry point. Reads every spreadsheet attached to one budget record,
      * adds up all the line items, and writes the net figure back to the record.
      * @param recordSysId - sys_id of the budget application record
-     * @return Object {total, rows, files} or null if called without a record
+     * @return Object {total, rows, files, candidates, reset} or null if called without a record
      */
     recalculate: function(recordSysId) {
         // Stop immediately if we were called without a record to work on
@@ -43,6 +46,9 @@ BudgetSpreadsheetTotal.prototype = {
         var rowCount = 0;
         // Counts how many spreadsheet files were parsed SUCCESSFULLY
         var fileCount = 0;
+        // Counts .xlsx files we FOUND, whether or not they parsed - used to tell
+        // "nothing attached" apart from "attached but broken"
+        var candidateCount = 0;
 
         // Open a query against the attachment table to find this record's files
         var att = new GlideRecord('sys_attachment');
@@ -62,6 +68,8 @@ BudgetSpreadsheetTotal.prototype = {
             // Skip anything that is not an .xlsx file (PDFs, images, signed approvals, etc.)
             if (!this._isSpreadsheet(fileName))
                 continue;
+            // Record that a spreadsheet was at least present on the record
+            candidateCount++;
             // Parse this one file; returns {total, rows, parsed}
             var result = this._parseAttachment(att.getUniqueValue(), fileName);
             // Only count this file if it actually parsed and had the expected column
@@ -73,27 +81,38 @@ BudgetSpreadsheetTotal.prototype = {
             rowCount += result.rows;
         }
 
-        // If no spreadsheet parsed successfully, leave the existing total untouched
-        if (fileCount === 0) {
-            // Write an informational entry to the system log for troubleshooting
-            gs.info('BudgetSpreadsheetTotal: no readable .xlsx attachment found on ' + recordSysId);
-            // Return a result object so the caller knows nothing was changed
-            return {
-                total: null,
-                rows: 0,
-                files: 0
-            };
+        // CASE 1: spreadsheets were present but every one of them failed to parse.
+        // Leaving the old total in place is safer than zeroing it and hiding the fault.
+        if (candidateCount > 0 && fileCount === 0) {
+            // Record the problem clearly so an admin can investigate the file itself
+            gs.error('BudgetSpreadsheetTotal: ' + candidateCount + ' spreadsheet(s) on ' +
+                     recordSysId + ' could not be read - total left unchanged');
+            // Report back so the UI Action can warn the user rather than claim success
+            return { total: null, rows: 0, files: 0, candidates: candidateCount, reset: false };
         }
 
-        // Save the calculated figure onto the budget application record
+        // CASE 2: no spreadsheet is attached at all, e.g. the user deleted the last one.
+        if (candidateCount === 0) {
+            // Honour the configured behaviour rather than hard-coding the business decision
+            if (this.RESET_TO_ZERO_WHEN_EMPTY) {
+                // Clear the stale figure so the record does not show a total it cannot justify
+                this._writeTotal(recordSysId, 0);
+                // Note the reset in the log so the change is traceable
+                gs.info('BudgetSpreadsheetTotal: no spreadsheet on ' + recordSysId + ' - total reset to 0.00');
+                // Tell the caller a reset happened, so it can word its message accordingly
+                return { total: 0, rows: 0, files: 0, candidates: 0, reset: true };
+            }
+            // Reset is switched off, so leave the existing value exactly as it is
+            gs.info('BudgetSpreadsheetTotal: no spreadsheet on ' + recordSysId + ' - total left unchanged');
+            // Report that nothing was written
+            return { total: null, rows: 0, files: 0, candidates: 0, reset: false };
+        }
+
+        // CASE 3: the normal path - at least one spreadsheet parsed successfully
         this._writeTotal(recordSysId, netTotal);
 
         // Hand the numbers back so a UI Action can show them in a message
-        return {
-            total: netTotal,
-            rows: rowCount,
-            files: fileCount
-        };
+        return { total: netTotal, rows: rowCount, files: fileCount, candidates: candidateCount, reset: false };
     },
 
     /**
@@ -136,11 +155,7 @@ BudgetSpreadsheetTotal.prototype = {
             // Log the parser's own error text so support can see why it failed
             gs.error('BudgetSpreadsheetTotal: could not parse "' + fileName + '" - ' + parser.getErrorMessage());
             // Flag the failure so recalculate() does not count this as a processed file
-            return {
-                total: 0,
-                rows: 0,
-                parsed: false
-            };
+            return { total: 0, rows: 0, parsed: false };
         }
 
         // Read the header names the parser actually found, as an array of strings
@@ -153,13 +168,9 @@ BudgetSpreadsheetTotal.prototype = {
         if (headers.indexOf(this.AMOUNT_HEADER) === -1) {
             // Tell the reader exactly what was expected and what was actually present
             gs.error('BudgetSpreadsheetTotal: column "' + this.AMOUNT_HEADER +
-                '" not found in ' + fileName + '. Headers present: [' + headers + ']');
+                     '" not found in ' + fileName + '. Headers present: [' + headers + ']');
             // Flag the failure so recalculate() does not count this as a processed file
-            return {
-                total: 0,
-                rows: 0,
-                parsed: false
-            };
+            return { total: 0, rows: 0, parsed: false };
         }
 
         // Move to the next data row; returns false once every row has been read
@@ -191,11 +202,7 @@ BudgetSpreadsheetTotal.prototype = {
         }
 
         // Give the subtotal, the count, and the success flag back to recalculate()
-        return {
-            total: total,
-            rows: rows,
-            parsed: true
-        };
+        return { total: total, rows: rows, parsed: true };
     },
 
     /**
@@ -234,12 +241,15 @@ BudgetSpreadsheetTotal.prototype = {
             // Exit without writing anything
             return false;
         }
-        // Round to 2 decimal places - repeated floating point addition can produce values like 99.99999999
+        // Round to 2 decimals. toFixed always emits a DOT separator, which is what the
+        // platform expects for storage regardless of the user's display locale.
         var rounded = netTotal.toFixed(2);
-        // Set the total amount field to the rounded value
+        // Decimal fields take a plain numeric string
         gr.setValue(this.TOTAL_FIELD, rounded);
         // Save the change to the database
         gr.update();
+        // Log the written value so every change to the field is traceable
+        gs.info('BudgetSpreadsheetTotal: wrote value ' + rounded + ' to ' + recordSysId);
         // Tell the caller the write succeeded
         return true;
     },
@@ -250,13 +260,13 @@ BudgetSpreadsheetTotal.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-08-05 11:10:06</sys_created_on>
         <sys_id>fbcee609c3a28b50e5c2160ed4013131</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>BudgetSpreadsheetTotal</sys_name>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
         <sys_update_name>sys_script_include_fbcee609c3a28b50e5c2160ed4013131</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-08-05 12:37:49</sys_updated_on>
+        <sys_updated_on>2026-08-05 23:27:32</sys_updated_on>
     </sys_script_include>
 </record_update>

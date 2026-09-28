@@ -6,7 +6,7 @@
         <action_insert>false</action_insert>
         <action_query>false</action_query>
         <action_update>false</action_update>
-        <active>true</active>
+        <active>false</active>
         <add_message>false</add_message>
         <advanced>true</advanced>
         <change_fields>false</change_fields>
@@ -20,7 +20,7 @@
         </filter_condition>
         <is_rest>false</is_rest>
         <message/>
-        <name>Recalculate budget total on spreadsheet2</name>
+        <name>Recalculate on spreadsheet delete</name>
         <order>100</order>
         <priority>100</priority>
         <rest_method/>
@@ -34,44 +34,46 @@
     // The budget application table this rule cares about - must match the Script Include
     var TABLE_NAME = 'x_1962601_budget_t_budget';
 
-    // sys_attachment fires for EVERY attachment in the instance, so exit fast if it is not ours
+    // sys_attachment fires for EVERY deletion in the instance, so exit fast if it is not ours
     if (current.getValue('table_name') !== TABLE_NAME)
         return;
 
     // Read the file name and lower-case it so extension checking is case-insensitive
     var fileName = ('' + current.getValue('file_name')).toLowerCase();
 
-    // Ignore anything that is not an Excel workbook, e.g. a PDF quote or a screenshot
+    // Ignore deletions of non-spreadsheet files - removing a PDF should not change the total
     if (fileName.slice(-5) !== '.xlsx')
         return;
 
-    // Wrap the call so a bad file never blocks the user's upload with a stack trace
+    // Wrap the call so an error never blocks the user's delete action
     try {
-        // Run the calculation against the record the attachment belongs to
+        // Recalculate from whatever attachments REMAIN. This row is already gone from the
+        // database at "after delete", so the query below will not see the deleted file.
         new BudgetSpreadsheetTotal().recalculate(current.getValue('table_sys_id'));
     } catch (ex) {
         // Record the failure in the system log for an admin to investigate
-        gs.error('Budget total recalculation failed for attachment ' + current.getUniqueValue() + ': ' + ex);
+        gs.error('Budget total recalculation failed after deleting attachment ' +
+                 current.getUniqueValue() + ': ' + ex);
     }
 
 })(current, previous);]]></script>
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-08-05 11:18:25</sys_created_on>
+        <sys_created_on>2026-08-05 21:49:56</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>3b613e0dc3a28b50e5c2160ed401312b</sys_id>
-        <sys_mod_count>1</sys_mod_count>
-        <sys_name>Recalculate budget total on spreadsheet2</sys_name>
+        <sys_id>6af1c515c3e6cb50e5c2160ed401311b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Recalculate on spreadsheet delete</sys_name>
         <sys_overrides/>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
         <sys_policy/>
         <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
-        <sys_update_name>sys_script_3b613e0dc3a28b50e5c2160ed401312b</sys_update_name>
+        <sys_update_name>sys_script_6af1c515c3e6cb50e5c2160ed401311b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-08-05 11:19:39</sys_updated_on>
+        <sys_updated_on>2026-08-15 10:47:25</sys_updated_on>
         <template/>
         <when>after</when>
     </sys_script>
-    <sys_translated_text action="delete_multiple" query="documentkey=3b613e0dc3a28b50e5c2160ed401312b"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=6af1c515c3e6cb50e5c2160ed401311b"/>
 </record_update>

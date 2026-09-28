@@ -35,12 +35,18 @@
         <script><![CDATA[// Run the same calculation the business rule uses, for the record currently on screen
 var result = new BudgetSpreadsheetTotal().recalculate(current.getUniqueValue());
 
-// If no spreadsheet was found, tell the user rather than silently doing nothing
-if (!result || result.files === 0) {
-    // Show a yellow warning banner at the top of the form
-    gs.addErrorMessage('No .xlsx spreadsheet is attached to this record.');
+if (!result) {
+    // Defensive branch - recalculate() only returns null if called without a sys_id
+    gs.addErrorMessage('Could not identify the record to recalculate.');
+} else if (result.candidates > 0 && result.files === 0) {
+    // Files are attached but none could be read, so the old total is still showing
+    gs.addErrorMessage('A spreadsheet is attached but could not be read. ' +
+                       'The total has been left unchanged - check the system log for details.');
+} else if (result.reset) {
+    // No spreadsheet on the record, so the total was cleared back to zero
+    gs.addInfoMessage('No spreadsheet is attached. Total reset to 0.00.');
 } else {
-    // Show a green confirmation banner including the figures, so the user can sanity check
+    // Normal success path - show the figures so the user can sanity check them
     gs.addInfoMessage('Total updated to ' + result.total.toFixed(2) +
                       ' from ' + result.rows + ' line item(s) across ' + result.files + ' file(s).');
 }
@@ -59,7 +65,7 @@ action.setRedirectURL(current);]]></script>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>89017a4dc3a28b50e5c2160ed40131b4</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Recalculate Total from Spreadsheet</sys_name>
         <sys_overrides/>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
@@ -67,7 +73,7 @@ action.setRedirectURL(current);]]></script>
         <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
         <sys_update_name>sys_ui_action_89017a4dc3a28b50e5c2160ed40131b4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-08-05 11:17:43</sys_updated_on>
+        <sys_updated_on>2026-08-05 21:53:21</sys_updated_on>
         <table>x_1962601_budget_t_budget</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

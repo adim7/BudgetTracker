@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="6a1dfbf8c3110bd084365205e40131fa" label="PCard Vendor" max_length="40" name="x_1962601_budget_t_pcard_vendor" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Zip Code" max_length="20" name="vendor_zip" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Address" max_length="255" name="vendor_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Vendor Phone" max_length="40" name="vendor_phone" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="State" max_length="50" name="vendor_state" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Vendor POC" max_length="200" name="vendor_poc" type="string"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Vendor Name" mandatory="true" max_length="200" name="vendor_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="City" max_length="100" name="vendor_city" type="string"/>
+    </element>
+</database>

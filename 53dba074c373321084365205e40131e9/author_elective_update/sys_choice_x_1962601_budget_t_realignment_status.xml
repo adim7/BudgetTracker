@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_choice action="INSERT_OR_UPDATE" field="realignment_type" table="x_1962601_budget_t_realignment" version="3">
+    <sys_choice action="INSERT_OR_UPDATE" field="status" table="x_1962601_budget_t_realignment" version="3">
         <sys_choice_set action="INSERT_OR_UPDATE">
-            <element>realignment_type</element>
+            <element>status</element>
             <name>x_1962601_budget_t_realignment</name>
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2026-03-20 14:18:54</sys_created_on>
-            <sys_id>ce5fa03cc373321084365205e401310a</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>realignment_type</sys_name>
+            <sys_name>status</sys_name>
             <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
             <sys_policy/>
             <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
-            <sys_update_name>sys_choice_x_1962601_budget_t_realignment_realignment_type</sys_update_name>
+            <sys_update_name>sys_choice_x_1962601_budget_t_realignment_status</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-03-20 14:18:54</sys_updated_on>
         </sys_choice_set>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>realignment_type</element>
+            <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>1:1 (One to One)</label>
+            <label>Draft</label>
             <language>en</language>
             <name>x_1962601_budget_t_realignment</name>
             <sequence>0</sequence>
@@ -30,18 +29,17 @@
             <sys_created_on>2026-03-20 14:18:54</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>865fa03cc373321084365205e401310a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-03-20 14:18:54</sys_updated_on>
-            <value>one_to_one</value>
+            <value>draft</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>realignment_type</element>
+            <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>1:M (One to Many)</label>
+            <label>Pending Approval</label>
             <language>en</language>
             <name>x_1962601_budget_t_realignment</name>
             <sequence>1</sequence>
@@ -50,18 +48,17 @@
             <sys_created_on>2026-03-20 14:18:54</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>c65fa03cc373321084365205e401310a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-03-20 14:18:54</sys_updated_on>
-            <value>one_to_many</value>
+            <value>pending_approval</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>realignment_type</element>
+            <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>M:1 (Many to One)</label>
+            <label>Approved</label>
             <language>en</language>
             <name>x_1962601_budget_t_realignment</name>
             <sequence>2</sequence>
@@ -70,11 +67,48 @@
             <sys_created_on>2026-03-20 14:18:54</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>0a5fa03cc373321084365205e401310a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-03-20 14:18:54</sys_updated_on>
-            <value>many_to_one</value>
+            <value>approved</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Executed</label>
+            <language>en</language>
+            <name>x_1962601_budget_t_realignment</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-20 14:18:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-20 14:18:54</sys_updated_on>
+            <value>executed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Cancelled</label>
+            <language>en</language>
+            <name>x_1962601_budget_t_realignment</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-20 14:18:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-20 14:18:54</sys_updated_on>
+            <value>cancelled</value>
         </sys_choice>
     </sys_choice>
 </record_update>

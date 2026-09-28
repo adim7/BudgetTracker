@@ -2,7 +2,7 @@
     <sys_dictionary action="INSERT_OR_UPDATE" element="funding_certified" table="x_1962601_budget_t_pcard_transaction">
         <active>true</active>
         <array>false</array>
-        <attributes/>
+        <attributes>edge_encryption_enabled=true</attributes>
         <audit>false</audit>
         <calculation/>
         <choice>0</choice>
@@ -48,7 +48,6 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-06-03 18:52:05</sys_created_on>
-        <sys_id>db1d7ff8c3110bd084365205e4013159</sys_id>
         <sys_name>Funding Certified</sys_name>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
         <sys_policy/>

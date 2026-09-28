@@ -2,7 +2,7 @@
     <sys_dictionary action="INSERT_OR_UPDATE" element="" table="x_1962601_budget_t_cost_center">
         <active>true</active>
         <array>false</array>
-        <attributes/>
+        <attributes>enforce_dot_walk_cross_scope_access=true</attributes>
         <audit>true</audit>
         <calculation/>
         <choice>0</choice>
@@ -48,7 +48,6 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-03-20 14:18:53</sys_created_on>
-        <sys_id>715f603cc373321084365205e401315c</sys_id>
         <sys_name>x_1962601_budget_t_cost_center</sys_name>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
         <sys_policy/>

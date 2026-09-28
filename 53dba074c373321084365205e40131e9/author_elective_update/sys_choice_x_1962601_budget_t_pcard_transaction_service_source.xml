@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_choice action="INSERT_OR_UPDATE" field="state" table="x_1962601_budget_t_pcard_transaction" version="3">
+    <sys_choice action="INSERT_OR_UPDATE" field="service_source" table="x_1962601_budget_t_pcard_transaction" version="3">
         <sys_choice_set action="INSERT_OR_UPDATE">
-            <element>state</element>
+            <element>service_source</element>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
-            <sys_id>e31d7ff8c3110bd084365205e40131e4</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>state</sys_name>
+            <sys_name>service_source</sys_name>
             <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
             <sys_policy/>
             <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
-            <sys_update_name>sys_choice_x_1962601_budget_t_pcard_transaction_state</sys_update_name>
+            <sys_update_name>sys_choice_x_1962601_budget_t_pcard_transaction_service_source</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
         </sys_choice_set>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>state</element>
+            <element>service_source</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Draft</label>
+            <label>Mandatory Source</label>
             <language>en</language>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sequence>0</sequence>
@@ -30,18 +29,17 @@
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>9b1d7ff8c3110bd084365205e40131e1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>draft</value>
+            <value>mandatory_source</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>state</element>
+            <element>service_source</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Pending Funding Review</label>
+            <label>Optional Source</label>
             <language>en</language>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sequence>1</sequence>
@@ -50,18 +48,17 @@
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>db1d7ff8c3110bd084365205e40131e1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>pending_funding</value>
+            <value>optional_source</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>state</element>
+            <element>service_source</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Pending Approval</label>
+            <label>GSA Schedule</label>
             <language>en</language>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sequence>2</sequence>
@@ -70,18 +67,17 @@
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>1f1d7ff8c3110bd084365205e40131e1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>pending_approval</value>
+            <value>gsa_schedule</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>state</element>
+            <element>service_source</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Approved</label>
+            <label>BPA</label>
             <language>en</language>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sequence>3</sequence>
@@ -90,18 +86,17 @@
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>5f1d7ff8c3110bd084365205e40131e1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>approved</value>
+            <value>bpa</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>state</element>
+            <element>service_source</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Pending Receipt</label>
+            <label>Existing Contract</label>
             <language>en</language>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sequence>4</sequence>
@@ -110,18 +105,17 @@
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>9f1d7ff8c3110bd084365205e40131e1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>pending_receipt</value>
+            <value>existing_contract</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
-            <element>state</element>
+            <element>service_source</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Receipted</label>
+            <label>Open Market</label>
             <language>en</language>
             <name>x_1962601_budget_t_pcard_transaction</name>
             <sequence>5</sequence>
@@ -130,31 +124,10 @@
             <sys_created_on>2026-06-03 18:52:06</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>df1d7ff8c3110bd084365205e40131e1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>receipted</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>state</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Closed</label>
-            <language>en</language>
-            <name>x_1962601_budget_t_pcard_transaction</name>
-            <sequence>6</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-06-03 18:52:06</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_id>131d7ff8c3110bd084365205e40131e2</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-06-03 18:52:06</sys_updated_on>
-            <value>closed</value>
+            <value>open_market</value>
         </sys_choice>
     </sys_choice>
 </record_update>
