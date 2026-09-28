@@ -25,25 +25,25 @@
                 <element inactive_on_update="false" label="Property Officer Notified" sequence="1" value="notified"/>
             </choice>
         </element>
-        <element attributes="encode_utf8=false" label="3rd Party Receipter" max_length="32" name="receipter" reference="sys_user" type="reference"/>
-        <element label="Officer Approved" max_length="40" name="officer_approved" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="3rd Party Receipter" max_length="32" name="receipter" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Officer Approved" max_length="40" name="officer_approved" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Date of Request" mandatory="true" max_length="40" name="date_of_request" type="glide_date"/>
-        <element label="Estimated Total" max_length="20" name="estimate_total" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Estimated Total" max_length="20" name="estimate_total" type="decimal"/>
         <element attributes="edge_encryption_enabled=true" label="Ship To Attention" max_length="200" name="ship_to_attention" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Ship To Address" max_length="255" name="ship_to_address" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Requester Phone" max_length="40" name="requester_phone" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Approval Date" max_length="40" name="approval_date" type="glide_date"/>
-        <element attributes="encode_utf8=false" label="Funding Official" max_length="32" name="funding_official" reference="sys_user" type="reference"/>
-        <element label="Total Amount Paid" max_length="20" name="total_amount_paid" type="decimal"/>
-        <element label="Property Acknowledged" max_length="40" name="property_acknowledged" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Funding Official" max_length="32" name="funding_official" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Total Amount Paid" max_length="20" name="total_amount_paid" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Property Acknowledged" max_length="40" name="property_acknowledged" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Requester Name" max_length="200" name="requester_name" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Purchase Date" max_length="40" name="purchase_date" type="glide_date"/>
-        <element attributes="encode_utf8=false" label="Cardholder" mandatory="true" max_length="32" name="cardholder" reference="x_1962601_budget_t_pcard_cardholder" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Cardholder" mandatory="true" max_length="32" name="cardholder" reference="x_1962601_budget_t_pcard_cardholder" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Special Approvals Needed" max_length="1000" name="special_approvals" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Ship To Zip" max_length="20" name="ship_to_zip" type="string"/>
-        <element attributes="encode_utf8=false" label="Vendor" max_length="32" name="vendor" reference="x_1962601_budget_t_pcard_vendor" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Vendor" max_length="32" name="vendor" reference="x_1962601_budget_t_pcard_vendor" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Property Acknowledged Date" max_length="40" name="property_acknowledged_date" type="glide_date"/>
-        <element attributes="encode_utf8=false" label="Approving Officer" max_length="32" name="approving_officer" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approving Officer" max_length="32" name="approving_officer" reference="sys_user" type="reference"/>
         <element attributes="edge_encryption_enabled=true" choice="3" default="draft" label="State" max_length="40" name="state" type="string">
             <choice>
                 <element inactive_on_update="false" label="Closed" sequence="6" value="closed"/>
@@ -55,7 +55,7 @@
                 <element inactive_on_update="false" label="Receipted" sequence="5" value="receipted"/>
             </choice>
         </element>
-        <element label="Receipt Validated" max_length="40" name="receipt_validated" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Receipt Validated" max_length="40" name="receipt_validated" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Delivery Location" max_length="255" name="delivery_location" type="string"/>
         <element attributes="edge_encryption_enabled=true" choice="1" default="routine" label="Urgency" max_length="40" name="urgency" type="string">
             <choice>
@@ -77,8 +77,8 @@
         </element>
         <element attributes="edge_encryption_enabled=true" label="Ship To State" max_length="50" name="ship_to_state" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Receipt Date" max_length="40" name="receipt_date" type="glide_date"/>
-        <element attributes="encode_utf8=false" label="Property Officer" max_length="32" name="property_officer" reference="sys_user" type="reference"/>
-        <element label="Funding Certified" max_length="40" name="funding_certified" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Property Officer" max_length="32" name="property_officer" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Funding Certified" max_length="40" name="funding_certified" type="boolean"/>
         <index name="index">
             <element name="approving_officer"/>
         </index>

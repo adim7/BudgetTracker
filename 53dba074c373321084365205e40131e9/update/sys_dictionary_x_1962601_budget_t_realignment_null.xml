@@ -2,7 +2,7 @@
     <sys_dictionary action="INSERT_OR_UPDATE" element="" table="x_1962601_budget_t_realignment">
         <active>true</active>
         <array>false</array>
-        <attributes/>
+        <attributes>enforce_dot_walk_cross_scope_access=true</attributes>
         <audit>true</audit>
         <calculation/>
         <choice>1</choice>

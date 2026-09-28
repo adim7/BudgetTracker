@@ -2,10 +2,10 @@
     <sys_dictionary action="INSERT_OR_UPDATE" element="total_allocated" table="x_1962601_budget_t_budget">
         <active>true</active>
         <array>false</array>
-        <attributes/>
+        <attributes>edge_encryption_enabled=true</attributes>
         <audit>false</audit>
         <calculation/>
-        <choice>0</choice>
+        <choice/>
         <choice_field/>
         <choice_table/>
         <column_label>Total Allocated Amount</column_label>

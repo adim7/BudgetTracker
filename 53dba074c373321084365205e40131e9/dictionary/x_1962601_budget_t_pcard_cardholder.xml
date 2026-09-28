@@ -13,7 +13,7 @@
             </choice>
         </element>
         <element attributes="edge_encryption_enabled=true" label="Phone" max_length="40" name="phone" type="string"/>
-        <element attributes="encode_utf8=false" display="true" label="Cardholder" mandatory="true" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" display="true" label="Cardholder" mandatory="true" max_length="32" name="user" reference="sys_user" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Program Office" max_length="200" name="program_office" type="string"/>
         <index name="index">
             <element name="user"/>

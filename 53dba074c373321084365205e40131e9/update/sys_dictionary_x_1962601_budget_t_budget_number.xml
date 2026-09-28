@@ -5,7 +5,7 @@
         <attributes>edge_encryption_enabled=true</attributes>
         <audit>false</audit>
         <calculation/>
-        <choice>0</choice>
+        <choice/>
         <choice_field/>
         <choice_table/>
         <column_label>Budget Number</column_label>
@@ -33,8 +33,8 @@
         <name>x_1962601_budget_t_budget</name>
         <next_element/>
         <primary>false</primary>
-        <read_only>false</read_only>
-        <read_only_option/>
+        <read_only>true</read_only>
+        <read_only_option>instance_configured</read_only_option>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>

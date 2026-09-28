@@ -12,13 +12,13 @@
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-06-03 18:52:03</sys_created_on>
-        <sys_id>f21d3ff8c3110bd084365205e4013163</sys_id>
+        <sys_id>ef6fba1ec382c710e5c2160ed4013142</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_1962601_budget_t_pcard_vendor</sys_name>
         <sys_package display_value="Budget Track" source="x_1962601_budget_t">53dba074c373321084365205e40131e9</sys_package>
         <sys_policy/>
         <sys_scope display_value="Budget Track">53dba074c373321084365205e40131e9</sys_scope>
-        <sys_update_name>ua_table_licensing_config_f21d3ff8c3110bd084365205e4013163</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_ef6fba1ec382c710e5c2160ed4013142</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-06-03 18:52:03</sys_updated_on>
     </ua_table_licensing_config>
